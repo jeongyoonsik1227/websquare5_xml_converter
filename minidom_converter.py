@@ -119,7 +119,6 @@ if __name__ == '__main__':
     b_debug_mode = args.debug_mode
 
     # TODO : 삭제
-    # TODO : 삭제
     # file_name = "C:/PycharmProjects/test_ysjeong/Format_changer/xml_minidom/test/files/065000100.xml"
 
     # Default parameters setting
