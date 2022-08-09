@@ -1167,10 +1167,12 @@ def removePositionInfo(wq_elem):
 
             # position 정보 중에서 width 제외한 left, top, height 문자열 체크하며
             # remove_list 에 추가
+            # textbox 의 width 는 삭제하지 않는다.
             if "position" in style_elem \
                     or "left" in style_elem \
                     or "top" in style_elem \
-                    or "height" in style_elem:
+                    or "height" in style_elem \
+                    or ("width" in style_elem and elem.localName == "textbox"):
 
                 # or "width" in style_elem \
                 remove_list.append(style_elem)
