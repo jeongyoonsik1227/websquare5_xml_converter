@@ -921,10 +921,24 @@ def search_and_regroup_nodes(document):
 
                 if i == 0:
 
-                    group_table_c = group_table
+                    # group 이 여러개인 경우
+                    if len(all_rows_seperated) == 1:
+                        group_table_c = group_table
 
-                    # top 값을 변경한다.
-                    i_new_top = i_group_top
+                        # top 값을 변경한다.
+                        i_new_top = i_group_top
+                    else:
+                        # group table 복사
+                        group_table_c = copy_group_table(document, group_table, i)
+                        # 부모 group 에 추가
+                        group_table.element.appendChild(group_table_c.element)
+
+                        # top 값을 변경한다.
+                        i_new_top = 0
+
+
+                    # # top 값을 변경한다.
+                    # i_new_top = i_group_top
                     # 업데이트 top
                     updateTop(group_table_c, i_new_top)
 
@@ -953,12 +967,17 @@ def search_and_regroup_nodes(document):
 
                 elif i > 0:
 
-                    # # group table 복사
+                    # group table 복사
                     group_table_c = copy_group_table(document, group_table, i)
 
-                    # top 값을 변경한다.
-                    # i_new_top = i_group_top + i_group_height_tot + config.group_space
-                    i_new_top = i_group_top + i_group_height_tot
+                    # TODO : 추가 확인
+                    # 부모 group 에 추가
+                    group_table.element.appendChild(group_table_c.element)
+                    
+                    # # top 값을 변경한다.
+                    # i_new_top = i_group_top + i_group_height_tot
+                    # top 값을 변경한다. (상대좌표이므로 i_group_top 제외)
+                    i_new_top = i_group_height_tot
 
                     # 업데이트 top
                     updateTop(group_table_c, i_new_top)
@@ -985,6 +1004,13 @@ def search_and_regroup_nodes(document):
                             i_group_height_tot += ((len(c_elem_row_list) * config.row_height) + (len(c_elem_row_list) * config.group_space_extra) + config.group_space_extra)
 
 
+                    # 마지막 row 의 경우만 실행
+                    if i == (len(all_rows_seperated) - 1):
+
+                        # height 값을 변경한다.
+                        updateHeight(group_table, i_group_height_tot)
+                        # background-color 삭제
+                        removeStyleInfo(group_table, "background-color")
 
                 # 02. th, td node 를 정의한다.
                 define_th_td_node(c_elem_row_list)
@@ -1173,6 +1199,54 @@ def removePositionInfo(wq_elem):
                     or "top" in style_elem \
                     or "height" in style_elem \
                     or ("width" in style_elem and elem.localName == "textbox"):
+
+                # or "width" in style_elem \
+                remove_list.append(style_elem)
+
+        # style array 에서 remove_list 항목 삭제.
+        for p_info in remove_list:
+            style_arr.remove(p_info)
+
+        # Style 업데이트
+        elem.attributes["style"] = ";".join(style_arr)
+
+
+"""
+    Element Style 의 특정 Style 정보 (left, top, height, width, background-color 대상) 를 삭제한다.
+"""
+
+
+def removeStyleInfo(wq_elem, style_target):
+    # 원본 element
+    elem = wq_elem.element
+
+    # attributes 가 존재하면.
+    if elem.attributes and elem.attributes.get("style"):
+        style_str = elem.attributes.get("style").value.strip()
+
+        # Style 추출
+        style_arr = style_str.split(";")
+
+        # remove list : left, top, width, height, background-color
+        remove_list = []
+
+        for i, style_elem in enumerate(style_arr):
+            if len(style_elem.strip()) == 0:
+                continue
+
+            # 지정된 style 요소만 삭제하고 나머지 skip
+            if style_target not in style_elem:
+                continue
+
+            # position 정보 중에서 width 제외한 left, top, height, background-color 문자열 체크하며
+            # remove_list 에 추가
+            # textbox 의 width 는 삭제하지 않는다.
+            if "position" in style_elem \
+                    or "left" in style_elem \
+                    or "top" in style_elem \
+                    or "height" in style_elem \
+                    or "width" in style_elem \
+                    or "background-color" in style_elem:
 
                 # or "width" in style_elem \
                 remove_list.append(style_elem)
