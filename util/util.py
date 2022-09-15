@@ -80,10 +80,11 @@ def getEqElement(elem):
     wq_element.dataType = attributes_and_style_map["dataType"]
 
     # ETC
-    wq_element.tagName = elem.tagName
-    wq_element.localName = elem.localName
-    wq_element.right = int(wq_element.left) + int(wq_element.width)
-    wq_element.bottom = int(wq_element.top) + int(wq_element.height)
+    if elem.nodeName not in ["#cdata-section"]:
+        wq_element.tagName = elem.tagName
+        wq_element.localName = elem.localName
+        wq_element.right = int(wq_element.left) + int(wq_element.width)
+        wq_element.bottom = int(wq_element.top) + int(wq_element.height)
 
     return wq_element
 
