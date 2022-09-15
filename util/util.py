@@ -13,7 +13,7 @@ from . import config
 '''
 
 
-class WqElement():
+class WqElement:
     def __init__(self, element=None):
         # element
         self.element = element
