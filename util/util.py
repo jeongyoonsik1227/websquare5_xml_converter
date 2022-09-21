@@ -851,7 +851,7 @@ def get_latest_group_table(body_root, group_table):
     # 최신 group_table 을 가져온다.
     xf_group_list = get_xf_group_list(body_root)
     for g in xf_group_list:
-        if g.control_id == group_table.control_id:
+        if g.element.childNodes == group_table.element.childNodes:
             ret_group_table = g
             break
 
