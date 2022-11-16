@@ -13,6 +13,8 @@ NOTATION_NODE = 12
 PROCESSING_INSTRUCTION_NODE = 7
 TEXT_NODE = 3
 
+# Default screen sizee
+DEFAULT_SCREEN_WIDTH = 1024
 
 # Child node
 localname_last_node_arr = ["trigger", "gridView", "select1", "select"]
@@ -34,4 +36,5 @@ min_height = 20
 row_height = 50
 # group space (row * 20)
 group_space_extra = 27
+# group 간의 간격.
 group_space = 50
