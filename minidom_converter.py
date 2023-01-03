@@ -133,7 +133,11 @@ if __name__ == '__main__':
     if len(log_flag.strip()) == 0:
         log_flag = "Y"
 
-    # parameter 체크.
+    # TODO : 삭제
+    # if len(dir_path.strip()) == 0:
+    #     dir_path = "./test/files"
+
+    # 필수 parameter 체크.
     if len(dir_path.strip()) + len(file_name.strip()) == 0:
         raise Exception("Please, enter dir-path or file-name")
 
