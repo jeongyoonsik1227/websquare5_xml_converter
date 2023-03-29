@@ -131,11 +131,7 @@ if __name__ == '__main__':
 
     # log_flag 기본값 "Y"
     if len(log_flag.strip()) == 0:
-        log_flag = "Y"
-
-    # TODO : 삭제
-    # if len(dir_path.strip()) == 0:
-    #     dir_path = "./test/files"
+        log_flag = "N"
 
     # 필수 parameter 체크.
     if len(dir_path.strip()) + len(file_name.strip()) == 0:
