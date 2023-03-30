@@ -3115,7 +3115,9 @@ def add_group_to_tab_content_child(document):
         if len(childNodes_copy) > 0:
 
             # child 노드의 첫번째가 group 이 아닌 경우 추가.
-            if getEqElement(childNodes_copy[0]).localName != "group":
+            if getEqElement(childNodes_copy[0]).localName != "group" \
+                    or (getEqElement(childNodes_copy[0]).localName == "group"
+                        and len(getEqElement(childNodes_copy[0]).element.childNodes) == 0):
                 insert_child_group_with_class(document, c_content, "")
                 c_content.childNodes[0].setAttribute("style", "width:{}px;".format(config.min_group_width))
 
